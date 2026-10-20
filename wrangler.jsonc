@@ -1,0 +1,9 @@
+// VOCIS — Cloudflare Workers static assets. No build step: the public/ folder is served as-is.
+{
+  "name": "vocis-site",
+  "compatibility_date": "2026-10-20",
+  "assets": {
+    "directory": "./public",
+    "not_found_handling": "404-page"
+  }
+}

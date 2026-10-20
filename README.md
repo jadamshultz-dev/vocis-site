@@ -2,36 +2,39 @@
 
 The public site for VOCIS, at [vocisgroup.com](https://vocisgroup.com).
 
-One page, three sections, no build step. Plain HTML, CSS and JavaScript, served as-is by Netlify.
+One page, three sections, no build step. Plain HTML, CSS and JavaScript, served as-is by Cloudflare.
 
 ## Where things live
 
+Everything the public sees is in `public/`. Files at the repo root (this README, `wrangler.jsonc`) are never served.
+
 | What | File |
 |---|---|
-| All copy | `index.html`, one block per section (`#about`, `#thesis`, `#services`) |
-| Colors, type, layout, motion | `assets/css/main.v1.css`, with the palette tokens at the top under `:root` |
-| Hero light field, load sequence, scroll reveals | `assets/js/main.v1.js` |
-| 404 page | `404.html` |
-| Fonts (self-hosted, Latin subset) | `assets/fonts/` |
-| Share image and icons | `assets/img/`, `favicon.ico` |
-| Hosting, redirects, security and cache headers | `netlify.toml` |
+| All copy | `public/index.html`, one block per section (`#about`, `#thesis`, `#services`) |
+| Colors, type, layout, motion | `public/assets/css/main.v1.css`, with the palette tokens at the top under `:root` |
+| Hero light field, load sequence, scroll reveals | `public/assets/js/main.v1.js` |
+| 404 page | `public/404.html` |
+| Fonts (self-hosted, Latin subset) | `public/assets/fonts/` |
+| Share image and icons | `public/assets/img/`, `public/favicon.ico` |
+| Security and cache headers | `public/_headers` |
+| Cloudflare deploy settings | `wrangler.jsonc` |
 
 ## Editing copy
 
-Open `index.html`, change the text, commit to `main`. Netlify deploys within a minute. Keep curly apostrophes (’) to match the typography.
+Open `public/index.html`, change the text, and commit to `main`. Cloudflare deploys within a minute or two. Keep curly apostrophes (’) to match the typography.
 
 ## Editing CSS or JS
 
 CSS and JS are cached for a year, so a change needs a new filename:
 
 1. Rename the file, e.g. `main.v1.css` → `main.v2.css`.
-2. Update its `<link>` or `<script>` tag in `index.html` (and the stylesheet link in `404.html`).
+2. Update its `<link>` or `<script>` tag in `public/index.html` (and the stylesheet link in `public/404.html`).
 
-HTML is never cached, so visitors pick up the new files straight away.
+HTML revalidates on every request, so visitors pick up the new files straight away.
 
 ## The inline script
 
-`index.html` has one inline line in the `<head>` that adds a `js` class before first paint, so the load sequence doesn't flash. The Content Security Policy in `netlify.toml` allows it by hash. If you change that line, regenerate the hash and update `netlify.toml`:
+`index.html` has one inline line in the `<head>` that adds a `js` class before first paint, so the load sequence doesn't flash. The Content Security Policy in `public/_headers` allows it by hash. If you change that line, regenerate the hash and update `_headers`:
 
 ```sh
 printf '%s' 'document.documentElement.className+=" js"' | openssl dgst -sha256 -binary | base64
@@ -40,16 +43,20 @@ printf '%s' 'document.documentElement.className+=" js"' | openssl dgst -sha256 -
 ## Preview locally
 
 ```sh
-python3 -m http.server 8000
+cd public && python3 -m http.server 8000
 # then open http://localhost:8000
 ```
 
-## Deploying
+## Deploying on Cloudflare
 
-1. In Netlify: **Add new site → Import an existing project**, and pick this repository.
-2. Leave the build command empty and set the publish directory to `.` (both are already in `netlify.toml`).
-3. **Domain management:** add `vocisgroup.com` as the primary domain and `www.vocisgroup.com` as an alias, then point DNS at Netlify. HTTPS is issued automatically, and `netlify.toml` redirects www and http to `https://vocisgroup.com`.
-4. Pull requests get deploy previews automatically.
+The domain's DNS must be on Cloudflare (nameservers pointed at Cloudflare).
+
+1. **Connect the repo.** In the Cloudflare dashboard, go to **Workers & Pages → Create → Import a repository**, and pick this repo. Leave the build command empty. The deploy command is `npx wrangler deploy`, which reads `wrangler.jsonc` and serves `public/`.
+   *Using Cloudflare Pages instead also works: leave the build command empty and set the build output directory to `public`.*
+2. **Add the domains.** In the project's **Settings → Domains & Routes**, add `vocisgroup.com` and `www.vocisgroup.com` as custom domains.
+3. **Redirect www to the bare domain.** Under the zone's **Rules → Redirect Rules**, use the "Redirect from WWW to root" template (301, preserve path and query).
+4. **Force HTTPS.** Under **SSL/TLS → Edge Certificates**, turn on **Always Use HTTPS**.
+5. **Keep Cloudflare from injecting scripts.** The CSP blocks anything the site didn't ship, so leave these off: Rocket Loader, Email Address Obfuscation, Zaraz, and automatic Web Analytics injection. If any are on, the browser console will show CSP errors.
 
 ## Principles
 
@@ -60,4 +67,4 @@ python3 -m http.server 8000
 
 ## Licenses
 
-Cormorant Garamond and Hanken Grotesk are under the SIL Open Font License; see `assets/fonts/OFL-*.txt`.
+Cormorant Garamond and Hanken Grotesk are under the SIL Open Font License; see `public/assets/fonts/OFL-*.txt`.
