@@ -72,7 +72,7 @@ body {
   color: var(--text);
   font-family: var(--sans);
   font-weight: 300;
-  font-size: clamp(16px, 0.35vw + 15px, 19px);
+  font-size: clamp(15px, 0.3vw + 14.25px, 18px);
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -126,14 +126,6 @@ p, h1, h2, h3, dl, dd, ol { margin: 0; }
   letter-spacing: 0.24em;
   text-transform: uppercase;
   font-variant-numeric: tabular-nums;
-}
-
-.numeral {
-  font-family: var(--serif);
-  font-weight: 400;
-  font-size: 15px;
-  letter-spacing: 0.12em;
-  color: var(--brass);
 }
 
 .display {
@@ -476,19 +468,8 @@ main { position: relative; }
   border-bottom: 1px solid var(--hair-quiet);
 }
 .principles li {
-  display: grid;
-  grid-template-columns: 52px minmax(0, 1fr);
-  gap: 12px;
   padding: 28px 0;
   border-top: 1px solid var(--hair-quiet);
-}
-.principles__n {
-  font-family: var(--serif);
-  font-style: italic;
-  font-weight: 400;
-  font-size: 24px;
-  line-height: 1.1;
-  color: var(--brass);
 }
 .principles h3 {
   font-family: var(--serif);
