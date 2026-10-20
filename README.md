@@ -10,7 +10,7 @@ Everything the public sees is in `public/`. Files at the repo root (this README,
 
 | What | File |
 |---|---|
-| All copy | `public/index.html`, one block per section (`#about`, `#thesis`, `#services`) |
+| All copy | `public/index.html`, one block per section (`#about`, `#approach`, `#services`) |
 | Colors, type, layout, motion | `public/assets/css/main.v1.css`, with the palette tokens at the top under `:root` |
 | Hero light field, load sequence, scroll reveals | `public/assets/js/main.v1.js` |
 | 404 page | `public/404.html` |

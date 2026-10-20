@@ -422,18 +422,18 @@ main { position: relative; }
   .chapter__body { max-width: 760px; }
 }
 
-/* Thesis: a faint, slow echo of the hero light */
+/* Approach: a faint, slow echo of the hero light */
 /* Full-bleed so the glow is never clipped, with the same content column as the other chapters. */
-.chapter--thesis {
+.chapter--approach {
   --edge: max(var(--gutter), calc((100% - 1240px) / 2 + var(--gutter)));
   max-width: none;
   overflow: hidden;
   padding-left: var(--edge);
   padding-right: var(--edge);
 }
-.chapter--thesis::before { left: var(--edge); right: var(--edge); }
-.chapter--thesis > .chapter__index,
-.chapter--thesis > .chapter__body { position: relative; }
+.chapter--approach::before { left: var(--edge); right: var(--edge); }
+.chapter--approach > .chapter__index,
+.chapter--approach > .chapter__body { position: relative; }
 .echo {
   position: absolute;
   inset: 0;
