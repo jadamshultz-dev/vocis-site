@@ -1,0 +1,87 @@
+# VOCIS — Netlify configuration
+# Static site: no build step. The repo root is published as-is.
+
+[build]
+  publish = "."
+  command = ""
+
+# Canonical host: www → apex.
+# Netlify serves HTTPS automatically once the certificate is issued.
+[[redirects]]
+  from = "https://www.vocisgroup.com/*"
+  to = "https://vocisgroup.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://www.vocisgroup.com/*"
+  to = "https://vocisgroup.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://vocisgroup.com/*"
+  to = "https://vocisgroup.com/:splat"
+  status = 301
+  force = true
+
+# Keep the source files out of public view.
+[[redirects]]
+  from = "/README.md"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/netlify.toml"
+  to = "/404.html"
+  status = 404
+  force = true
+
+# ---------- Security headers ----------
+# The one inline script (adds the "js" class before first paint) is allowed by hash.
+# If you change that line in index.html, regenerate the hash (see README).
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'sha256-pfgOMgfVZwm2ODyms34QYW9h8EwicylhV77q5LHK8c0='; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests"
+    Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=(), interest-cohort=(), browsing-topics=()"
+    Cross-Origin-Opener-Policy = "same-origin"
+
+# ---------- Caching ----------
+# HTML always revalidates, so edits go live immediately.
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# CSS and JS are versioned in their filenames (main.v1.css → main.v2.css).
+[[headers]]
+  for = "/assets/css/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/assets/js/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/assets/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Access-Control-Allow-Origin = "*"
+
+[[headers]]
+  for = "/assets/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
