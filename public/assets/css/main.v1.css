@@ -252,9 +252,10 @@ html:not(.js) .nav__mark { opacity: 1; }
   isolation: isolate;
   /* No-JS fallback: a still, intentional field */
   background:
-    radial-gradient(ellipse 22% 9% at 65% 88%, color-mix(in srgb, var(--glow-4) 42%, transparent) 0%, transparent 100%),
-    radial-gradient(ellipse 40% 16% at 62% 86%, color-mix(in srgb, var(--glow-3) 40%, transparent) 0%, transparent 100%),
-    radial-gradient(ellipse 60% 55% at 36% 40%, color-mix(in srgb, var(--glow-2) 70%, transparent) 0%, transparent 100%),
+    radial-gradient(ellipse 55% 50% at 96% 98%, color-mix(in srgb, var(--glow-3) 24%, transparent) 0%, transparent 100%),
+    radial-gradient(ellipse 50% 45% at 30% 34%, color-mix(in srgb, var(--glow-2) 70%, transparent) 0%, transparent 100%),
+    radial-gradient(ellipse 45% 42% at 72% 56%, color-mix(in srgb, var(--glow-2) 55%, transparent) 0%, transparent 100%),
+    radial-gradient(ellipse 45% 30% at 52% 88%, color-mix(in srgb, var(--glow-2) 45%, transparent) 0%, transparent 100%),
     var(--glow-1);
 }
 .js .hero { background: var(--glow-1); }

@@ -12,13 +12,15 @@
 
   var GLOW = ["#1C2735", "#2D3E52", "#8D7B62", "#D8C5A4"];
 
-  /* x, y: base centre (0–1). ax, ay: drift amplitude. p: period in seconds.
-     r: radius as a share of the longer side. sy: vertical squash. a: strength. */
+  /* Haze: no single source. Slow navy drift with a faint warm edge in the far corner.
+     x, y: base centre (0–1). ax, ay: drift amplitude. p: period in seconds.
+     r: radius as a share of the longer side. sy: vertical squash. a: strength.
+     warm: laid over the field rather than added, so it reads as sand, not grey. */
   var BLOOMS = [
-    { c: GLOW[1], x: 0.34, y: 0.40, ax: 0.10, ay: 0.06, p: 54, ph: 0.0, r: 0.62, sy: 0.80, a: 0.62 },
-    { c: GLOW[1], x: 0.78, y: 0.30, ax: 0.08, ay: 0.07, p: 43, ph: 1.7, r: 0.46, sy: 0.90, a: 0.32 },
-    { c: GLOW[2], x: 0.62, y: 0.86, ax: 0.08, ay: 0.03, p: 38, ph: 0.9, r: 0.40, sy: 0.40, a: 0.72, warm: true },
-    { c: GLOW[3], x: 0.65, y: 0.89, ax: 0.05, ay: 0.015, p: 33, ph: 2.6, r: 0.21, sy: 0.30, a: 0.84, warm: true }
+    { c: GLOW[1], x: 0.28, y: 0.34, ax: 0.16, ay: 0.10, p: 47, ph: 0.0, r: 0.60, sy: 0.70, a: 0.62 },
+    { c: GLOW[1], x: 0.72, y: 0.56, ax: 0.14, ay: 0.12, p: 39, ph: 2.1, r: 0.52, sy: 0.75, a: 0.48 },
+    { c: GLOW[1], x: 0.52, y: 0.88, ax: 0.18, ay: 0.06, p: 58, ph: 4.0, r: 0.48, sy: 0.55, a: 0.40 },
+    { c: GLOW[2], x: 0.94, y: 0.96, ax: 0.04, ay: 0.03, p: 44, ph: 1.2, r: 0.70, sy: 0.55, a: 0.30, warm: true }
   ];
 
   var W = 0, H = 0, running = false, visible = true, raf = 0, t0 = 0;
@@ -59,7 +61,6 @@
       var a = b.a * breath * rise;
       var r = b.r * L;
 
-      /* Cool light adds (screen); warm light lays over, so it reads as sand, not grey. */
       ctx.globalCompositeOperation = b.warm ? "source-over" : "screen";
       ctx.save();
       ctx.translate(cx, cy);
@@ -129,6 +130,7 @@
       if (reduce.matches) { stop(); still(); } else start();
     };
     reduce.addEventListener ? reduce.addEventListener("change", onMotionChange) : reduce.addListener(onMotionChange);
+
   }
 
   /* ---------- Load sequence (runs once) ---------- */
