@@ -137,11 +137,6 @@ p, h1, h2, h3, dl, dd, ol { margin: 0; }
   text-wrap: balance;
   color: var(--text);
 }
-.display--xl {
-  font-size: clamp(54px, 9vw + 12px, 148px);
-  line-height: 0.98;
-  letter-spacing: -0.015em;
-}
 
 .foil {
   background: linear-gradient(100deg, var(--brass) 0%, var(--sand) 42%, var(--brass) 58%, var(--sand) 78%, var(--brass) 100%);
@@ -399,8 +394,7 @@ main { position: relative; }
   max-width: 62ch;
 }
 .chapter__body > .display { margin-bottom: 0.35em; max-width: 18ch; }
-.chapter__body > .display--xl { max-width: none; }
-.chapter__body > p { color: var(--text-soft); max-width: 58ch; }
+.chapter__body > .chapter__body > p { color: var(--text-soft); max-width: 58ch; }
 .chapter__body > .lede {
   color: var(--text);
   font-size: 1.12em;
