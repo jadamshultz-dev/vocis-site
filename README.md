@@ -10,12 +10,12 @@ Everything the public sees is in `public/`. Files at the repo root (this README,
 
 | What | File |
 |---|---|
-| All copy | `public/index.html`, one block per section (`#about`, `#approach`, `#services`) |
-| Colors, type, layout, motion | `public/assets/css/main.v1.css`, with the palette tokens at the top under `:root` |
-| Hero light field, load sequence, scroll reveals | `public/assets/js/main.v1.js` |
+| All copy | `public/index.html`, one block per section (`#studio`, `#capabilities`, `#principles`, `#approach`, `#contact`) |
+| Colors, type, layout, motion | `public/assets/css/site.v2.css`, with the brand palette tokens under `:root` |
+| Hero gradient and grain, menu, scroll behavior | `public/assets/js/site.v2.js` |
 | 404 page | `public/404.html` |
-| Fonts (self-hosted, Latin subset) | `public/assets/fonts/` |
-| Share image and icons | `public/assets/img/`, `public/favicon.ico` |
+| Fonts (Cormorant Garamond and Lato, self-hosted) | `public/assets/fonts/` |
+| Photos, gradients, logos, share image and icons | `public/img/`, `public/favicon.ico` |
 | Security and cache headers | `public/_headers` |
 | Cloudflare deploy settings | `wrangler.jsonc` |
 
@@ -27,18 +27,14 @@ Open `public/index.html`, change the text, and commit to `main`. Cloudflare depl
 
 CSS and JS are cached for a year, so a change needs a new filename:
 
-1. Rename the file, e.g. `main.v1.css` → `main.v2.css`.
+1. Rename the file, e.g. `site.v2.css` → `site.v3.css`.
 2. Update its `<link>` or `<script>` tag in `public/index.html` (and the stylesheet link in `public/404.html`).
 
 HTML revalidates on every request, so visitors pick up the new files straight away.
 
-## The inline script
+## No inline code
 
-`index.html` has one inline line in the `<head>` that adds a `js` class before first paint, so the load sequence doesn't flash. The Content Security Policy in `public/_headers` allows it by hash. If you change that line, regenerate the hash and update `_headers`:
-
-```sh
-printf '%s' 'document.documentElement.className+=" js"' | openssl dgst -sha256 -binary | base64
-```
+The security policy in `public/_headers` allows scripts and styles only from the site's own files. Keep all CSS in `public/assets/css/` and all JavaScript in `public/assets/js/`; a `<style>` or `<script>` block written into the HTML will be blocked.
 
 ## Preview locally
 
